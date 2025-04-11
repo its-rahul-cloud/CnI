@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Cities: AI & The 4th Industrial Civilization [Attractive Fonts]</title>
+
+    <!-- Google Fonts Import (Poppins & Lato) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.png" type="image/png">
+
+    <!-- GSAP & ScrollTrigger CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+
+    <!-- tsParticles CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
+
+    <style>
+        /* --- Basic Reset & Setup --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            /* Apply Lato as base font */
+            font-family: 'Lato', sans-serif;
+            font-weight: 400; /* Default Lato weight */
+            background-color: #121828; /* Fallback background */
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* tsParticles Container */
+        #tsparticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #presentation-container {
+            width: 100%;
+        }
+
+        /* --- Slide Structure & Common Styles --- */
+        .slide {
+            min-height: 100vh;
+            width: 100%;
+            padding: 5rem 7%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid #2a3045;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide.alt-layout .slide-content {
+            flex-direction: row-reverse;
+        }
+
+        /* --- Typography (Using Poppins & Lato) --- */
+        h1, h2, h3, h4 {
+            /* Apply Poppins to headings */
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600; /* Default Poppins Semi-Bold */
+            margin-bottom: 1rem;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-size: 3.6rem; /* Slightly larger H1 */
+            font-weight: 700; /* Poppins Bold */
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #00bcd4;
+        }
+        h2 {
+            font-size: 2.6rem; /* Slightly larger H2 */
+            font-weight: 700; /* Poppins Bold */
+            border-bottom: 2px solid #00bcd4;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 600; /* Poppins Semi-Bold */
+            color: #80deea;
+        }
+        h4 {
+            font-size: 1.4rem;
+            font-weight: 600; /* Poppins Semi-Bold */
+            color: #ffeb3b;
+            margin-bottom: 0.8rem;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            max-width: 70ch;
+             font-family: 'Lato', sans-serif; /* Explicitly Lato */
+        }
+
+        ul { list-style: none; padding-left: 0; margin-bottom: 1rem; }
+        ul li {
+             font-size: 1.05rem;
+             margin-bottom: 0.8rem; /* Slightly more space */
+             padding-left: 1.5em;
+             position: relative;
+             font-family: 'Lato', sans-serif; /* Explicitly Lato */
+         }
+        ul li::before { content: '▹'; position: absolute; left: 0; color: #00bcd4; font-weight: bold; font-size: 1.2em; line-height: 1; }
+        .pros ul li::before { content: '✅'; font-size: 1em; color: #4CAF50; }
+        .cons ul li::before { content: '❌'; font-size: 1em; color: #f44336; }
+
+        /* Use Lato Bold for strong tags */
+        strong, .principle strong {
+            font-weight: 700; /* Lato Bold */
+        }
+
+
+        /* --- Image Styling --- */
+        .banner-image, .side-image, .bottom-image {
+             display: block;
+             border-radius: 10px;
+             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+             object-fit: cover;
+             max-width: 100%;
+             transition: transform 0.4s ease, filter 0.4s ease;
+         }
+         .banner-image { width: 100%; max-height: 350px; margin-bottom: 2rem; }
+         .side-image { flex: 0 0 45%; max-width: 45%; max-height: 480px; }
+         .bottom-image { width: 80%; max-width: 600px; margin: 2rem auto 0 auto; }
+         .icon { width: 60px; height: 60px; margin-bottom: 1rem; opacity: 0.9; }
+         .svg-icon path { transition: fill 0.3s ease; }
+         .svg-icon:hover path { fill: #80deea; }
+
+
+        /* --- Specific Slide Styles & Interactive Elements --- */
+
+        /* Title Slide */
+        .title-slide .slide-content { flex-direction: column; text-align: center; justify-content: center; height: 80vh; }
+        .title-slide h2 { font-size: 1.8rem; border-bottom: none; color: #bdbdbd; font-weight: 400; /* Poppins Regular for subtitle */ }
+        .title-slide p { font-size: 1.2rem; color: #bdbdbd; font-family: 'Poppins', sans-serif; font-weight: 400; } /* Use Poppins for tag line */
+        .scroll-indicator { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: #80deea; font-size: 0.9rem; animation: bounce 2s infinite 1s; font-family: 'Lato', sans-serif; } /* Ensure correct font */
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); } 40% { transform: translateX(-50%) translateY(-10px); } 60% { transform: translateX(-50%) translateY(-5px); } }
+
+
+        /* Intro Slide */
+        .intro-slide .slide-content { flex-direction: column; align-items: center; text-align: center; }
+        .intro-slide h2 { margin-bottom: 1.5rem; }
+        .perspective-intro { display: flex; gap: 2rem; margin-top: 1rem; width: 100%; justify-content: center; flex-wrap: wrap; }
+        .perspective-box { background-color: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 8px; text-align: center; flex: 1; min-width: 250px; max-width: 400px; border: 1px solid transparent; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease; }
+        .perspective-box:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 10px 25px rgba(0, 188, 212, 0.3); border-color: rgba(0, 188, 212, 0.5); background-color: rgba(255, 255, 255, 0.08); }
+        .perspective-box h3 { margin-top: 0; margin-bottom: 0.5rem; border-bottom: none; font-size: 1.5rem; color: #80deea; }
+        .perspective-box p { font-size: 1rem; color: #bdbdbd; font-family: 'Lato', sans-serif; } /* Explicit Lato */
+
+        /* Anthropology & Experience Architect Slides Specifics */
+        .anthro-slide ul li::before { color: #ff9800; }
+        .exp-slide ul li::before { color: #03a9f4; }
+
+        /* Pros & Cons Slide */
+        .pros-cons-slide .slide-content { flex-direction: column; align-items: center; }
+        .pros-cons-slide h2 { text-align: center; margin-bottom: 2rem; }
+        .pros-cons-container { display: flex; gap: 3rem; width: 100%; justify-content: space-around; flex-wrap: wrap; }
+        .pros, .cons { flex: 1; min-width: 300px; background-color: rgba(0, 0, 0, 0.15); padding: 1.5rem; border-radius: 8px; border-left: 5px solid; transition: transform 0.3s ease, background-color 0.3s ease; }
+        .pros { border-left-color: #4CAF50; }
+        .cons { border-left-color: #f44336; }
+        .pros:hover, .cons:hover { transform: translateY(-5px); background-color: rgba(0, 0, 0, 0.25); }
+        .pros h4 { color: #81C784; }
+        .cons h4 { color: #e57373; }
+         .pros ul li, .cons ul li { font-family: 'Lato', sans-serif; } /* Ensure list text is Lato */
+
+        /* Synthesis Slide */
+        .synthesis-slide .slide-content { flex-direction: column; align-items: center; }
+        .synthesis-slide h2, .synthesis-slide h3 { text-align: center; }
+        .principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; width: 100%; }
+        .principle { background-color: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #00bcd4; font-size: 1rem; transition: transform 0.3s ease, background-color 0.3s ease, border-left-width 0.3s ease; font-family: 'Lato', sans-serif; /* Ensure Lato */ }
+        .principle:hover { transform: scale(1.02); background-color: rgba(255, 255, 255, 0.08); border-left-width: 6px; }
+        .principle strong { color: #80deea; display: block; margin-bottom: 0.5rem; font-family: 'Lato', sans-serif; /* Explicit */ }
+        .principle em { font-style: italic; color: #bdbdbd; font-size: 0.9rem; display: block; margin-top: 0.5rem; font-family: 'Lato', sans-serif; /* Explicit */ }
+
+         /* Interactive Feature Example */
+         #slide-synthesis-features ul li { cursor: pointer; transition: color 0.3s ease; }
+         #slide-synthesis-features ul li:hover { color: #80deea; }
+         #slide-synthesis-features .side-image { transition: transform 0.4s ease, filter 0.4s ease; }
+         #slide-synthesis-features .side-image.highlighted { transform: scale(1.05); filter: brightness(1.2) contrast(1.1); box-shadow: 0 0 25px rgba(0, 188, 212, 0.5); }
+
+
+        /* Challenges Slide */
+        .challenges-slide .slide-content { align-items: center; }
+        .challenges-slide ul li::before { content: '⚠️'; color: #ffeb3b; font-size: 1em; }
+
+        /* Conclusion Slide */
+        .conclusion-slide .slide-content { flex-direction: column; text-align: center; }
+        .conclusion-slide h2 { border-bottom: none; }
+        .contact-info { margin-top: 2rem; font-size: 0.9rem; color: #bdbdbd; }
+        .contact-info p { font-family: 'Lato', sans-serif; } /* Ensure Lato */
+
+
+        /* Enhanced Hover for Images */
+         .side-image:hover, .bottom-image:hover { transform: scale(1.03); filter: brightness(1.1) saturate(1.1); }
+
+        /* --- Progress Indicator Navigation --- */
+        #progress-nav { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); z-index: 1000; display: flex; flex-direction: column; gap: 12px; }
+        #progress-nav a { display: block; width: 12px; height: 12px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.3); border: 1px solid rgba(255, 255, 255, 0.5); transition: background-color 0.3s ease, transform 0.3s ease; position: relative; }
+        #progress-nav a.active { background-color: #00bcd4; transform: scale(1.3); border: 1px solid #ffffff; }
+        #progress-nav a:hover { background-color: rgba(0, 188, 212, 0.8); transform: scale(1.2); }
+        #progress-nav a::after { content: attr(data-tooltip); position: absolute; right: 150%; top: 50%; transform: translateY(-50%); background-color: #00bcd4; color: #121828; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-family: 'Lato', sans-serif; /* Tooltip font */ white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; pointer-events: none; }
+        #progress-nav a:hover::after { opacity: 1; visibility: visible; }
+
+
+        /* --- Responsiveness --- */
+        @media (max-width: 992px) {
+            h1 { font-size: 3rem; } h2 { font-size: 2.2rem; } h3 { font-size: 1.6rem; } p, ul li { font-size: 1rem; }
+            .slide { padding: 4rem 5%; }
+            .slide-content { flex-direction: column !important; gap: 2rem; text-align: center; }
+            .slide-content > div { width: 100%; max-width: 60ch; margin: 0 auto; }
+            .slide-content h2, .slide-content h3 { display: block; text-align: center; }
+            .slide-content h2 { display: inline-block; }
+            .side-image { flex: 0 0 auto; max-width: 70%; max-height: 300px; margin: 0 auto 1.5rem auto; }
+            .bottom-image { width: 90%; }
+            .pros-cons-container { flex-direction: column; gap: 1.5rem; }
+            .pros, .cons { min-width: unset; width: 100%; }
+            #progress-nav { right: 10px; }
+             #progress-nav a::after { display: none; }
+        }
+
+        @media (max-width: 576px) {
+            h1 { font-size: 2.5rem; } h2 { font-size: 1.8rem; } h3 { font-size: 1.4rem; } p, ul li { font-size: 0.95rem; }
+            .slide { padding: 3rem 4%; min-height: 95vh; }
+            .side-image { max-width: 90%; max-height: 250px; }
+            .principles-grid { grid-template-columns: 1fr; }
+            .perspective-intro { flex-direction: column; align-items: center; }
+            .perspective-box { width: 90%; max-width: 350px; }
+            .scroll-indicator { font-size: 0.8rem; bottom: 15px; }
+             #progress-nav { display: none; }
+        }
+
+        /* --- Optional Scrollbar Styling --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a2033; }
+        ::-webkit-scrollbar-thumb { background-color: #00bcd4; border-radius: 10px; border: 2px solid #1a2033; }
+        ::-webkit-scrollbar-thumb:hover { background-color: #80deea; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Particle Background Container -->
+    <div id="tsparticles"></div>
+
+    <!-- Progress Navigation -->
+    <nav id="progress-nav">
+         <a href="#slide-title" class="active" data-tooltip="Title"></a>
+         <a href="#slide-intro" data-tooltip="Introduction"></a>
+         <a href="#slide-anthro-overall" data-tooltip="Anthro: Impact"></a>
+         <a href="#slide-anthro-urban" data-tooltip="Anthro: Urban"></a>
+         <a href="#slide-anthro-4th" data-tooltip="Anthro: 4th Civ"></a>
+         <a href="#slide-anthro-proscons" data-tooltip="Anthro: Pros/Cons"></a>
+         <a href="#slide-exp-overall" data-tooltip="XA: Impact"></a>
+         <a href="#slide-exp-urban" data-tooltip="XA: Urban"></a>
+         <a href="#slide-exp-4th" data-tooltip="XA: 4th Civ"></a>
+         <a href="#slide-exp-proscons" data-tooltip="XA: Pros/Cons"></a>
+         <a href="#slide-synthesis-principles" data-tooltip="Synthesis: Principles"></a>
+         <a href="#slide-synthesis-features" data-tooltip="Synthesis: Features"></a>
+         <a href="#slide-challenges" data-tooltip="Challenges"></a>
+         <a href="#slide-conclusion" data-tooltip="Conclusion"></a>
+     </nav>
+
+    <main id="presentation-container">
+
+        <!-- Slide 1: Title -->
+        <section id="slide-title" class="slide title-slide">
+            <div class="slide-content">
+                <img src="images/future-city-banner.jpg" alt="Futuristic Cityscape Banner" class="banner-image" data- gsap="fade-scale-down">
+                <h1 data-gsap="fade-up">Future Cities</h1>
+                <h2 data-gsap="fade-up-delay">AI, Modernization & The 4th Industrial Civilization</h2>
+                <p data-gsap="fade-up-delay-more">An Exploration Through Two Lenses</p>
+                 <div class="scroll-indicator" data-gsap="fade-in-late">▼ Scroll Down or Use Arrows ▼</div>
+            </div>
+        </section>
+
+        <!-- Slide 2: Introduction -->
+        <section id="slide-intro" class="slide intro-slide">
+            <div class="slide-content">
+                <h2 data-gsap="fade-down">Two Lenses, One Future</h2>
+                <p data-gsap="fade-up">The relentless march of Artificial Intelligence and modernization reshapes our world. How will cities evolve? What defines the emerging Fourth Industrial Civilization? We explore this future through the distinct perspectives of:</p>
+                <div class="perspective-intro" data-gsap="stagger-children">
+                    <div class="perspective-box">
+                        <img src="images/anthropologist-icon.png" alt="Anthropology Icon" class="icon">
+                        <h3>The Anthropologist</h3>
+                        <p>Focusing on human culture, social structures, equity, and the deep impact on our collective identity.</p>
+                    </div>
+                    <div class="perspective-box">
+                         <img src="images/ux-icon.png" alt="Experience Architect Icon" class="icon">
+                        <h3>The Experience Architect</h3>
+                        <p>Focusing on user interaction, seamless integration, efficiency, and the quality of human-technology interfaces.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3.1: Anthropologist - Overall -->
+        <section id="slide-anthro-overall" class="slide anthro-slide">
+            <div class="slide-content">
+                 <img src="images/social-network-ai.jpg" alt="Abstract AI network connecting diverse people" class="side-image" data-gsap="fade-left">
+                <div data-gsap="stagger-children-right">
+                    <h2>Anthropologist's View: The Human Fabric</h2>
+                    <h3>Overall Impact of AI & Modernization</h3>
+                    <p>AI and modernization are not just tools; they are powerful agents restructuring social hierarchies, cultural norms, and economic systems. We observe:</p>
+                    <ul>
+                        <li><strong>Shifting Labor & Class:</strong> Automation potentially displacing traditional jobs, creating new skill demands, and potentially widening inequality if not managed equitably.</li>
+                        <li><strong>Algorithmic Cultures:</strong> AI curation influences tastes, opinions, and social interactions, creating echo chambers but also new forms of global cultural exchange.</li>
+                        <li><strong>Evolving Identities:</strong> The lines blur between physical and digital selves. How do communities form and maintain cohesion in increasingly mediated environments?</li>
+                        <li><strong>Data as Power:</strong> Control over data and algorithms becomes a new locus of social and political power, raising questions of surveillance and digital sovereignty.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3.2: Anthropologist - Urban -->
+        <section id="slide-anthro-urban" class="slide anthro-slide alt-layout">
+            <div class="slide-content">
+                 <div data-gsap="stagger-children-left">
+                    <h2>Anthropologist's View: The Human Fabric</h2>
+                    <h3>Shaping the Urban Landscape</h3>
+                    <p>The future city, seen anthropologically, is a site of contestation and adaptation:</p>
+                    <ul>
+                        <li><strong>Hyper-Segmentation:</strong> Cities may fragment into technologically advanced zones and underserved areas, exacerbating the digital divide spatially.</li>
+                        <li><strong>Smart Infrastructure's Social Cost:</strong> Efficiency gains from smart grids or transport must be weighed against privacy erosion and the potential for algorithmic bias in resource allocation or policing.</li>
+                        <li><strong>Redefined Public/Private Spaces:</strong> Pervasive sensing technology changes how we experience and behave in public. Where does the private sphere end?</li>
+                        <li><strong>New Rituals & Social Practices:</strong> How will communities adapt? Will technology foster new forms of local gathering or accelerate alienation?</li>
+                    </ul>
+                </div>
+                 <img src="images/city-comparison.jpg" alt="Split image: Gleaming smart city vs. older urban neighborhood" class="side-image" data-gsap="fade-right">
+            </div>
+        </section>
+
+         <!-- Slide 3.3: Anthropologist - 4th Ind Civ -->
+        <section id="slide-anthro-4th" class="slide anthro-slide">
+             <div class="slide-content">
+                 <img src="images/human-tech-integration.jpg" alt="Stylized image of human silhouette merged with digital code" class="side-image" data-gsap="fade-left">
+                <div data-gsap="stagger-children-right">
+                   <h2>Anthropologist's View: The Human Fabric</h2>
+                    <h3>Defining the 4th Industrial Civilization</h3>
+                    <p>This era is characterized by the deep entanglement of human biology, digital systems, and the physical environment. Key anthropological markers include:</p>
+                    <ul>
+                        <li><strong>Post-Human Questions:</strong> Debates arise around human enhancement, AI consciousness, and the very definition of "human" in a technologically mediated world.</li>
+                        <li><strong>Datafication of Life:</strong> Increasingly, human experience is translated into data, shaping governance, economics, and social relations in profound ways.</li>
+                        <li><strong>Networked Society Challenges:</strong> While interconnectedness grows, so does the potential for systemic fragility, rapid spread of misinformation, and new forms of social control.</li>
+                        <li><strong>Search for Meaning:</strong> How do cultures adapt their values, ethics, and belief systems in the face of such rapid, fundamental change?</li>
+                    </ul>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Slide 3.4: Anthropologist - Pros/Cons -->
+        <section id="slide-anthro-proscons" class="slide anthro-slide pros-cons-slide">
+            <div class="slide-content">
+                <h2 data-gsap="fade-down">Anthropologist's View: The Human Fabric</h2>
+                <h3 data-gsap="fade-up">Pros & Cons</h3>
+                <div class="pros-cons-container" data-gsap="stagger-children">
+                    <div class="pros">
+                        <h4>Potential Positives (Pros)</h4>
+                        <ul>
+                            <li>Enhanced global communication & understanding</li>
+                            <li>Tools to tackle complex global issues (climate, health)</li>
+                            <li>New forms of cultural expression & preservation</li>
+                            <li>Potential for more inclusive governance (if designed right)</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>Potential Negatives (Cons)</h4>
+                        <ul>
+                            <li>Exacerbated inequality & social stratification</li>
+                            <li>Job displacement & economic disruption</li>
+                            <li>Erosion of privacy & increased surveillance</li>
+                            <li>Algorithmic bias reinforcing discrimination</li>
+                            <li>Cultural homogenization or fragmentation</li>
+                             <li>Social alienation & breakdown of traditional communities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- Slide 4.1: Experience Architect - Overall -->
+        <section id="slide-exp-overall" class="slide exp-slide">
+             <div class="slide-content">
+                 <img src="images/seamless-interface.jpg" alt="Abstract visual of smooth, flowing digital interfaces" class="side-image" data-gsap="fade-left">
+                <div data-gsap="stagger-children-right">
+                    <h2>Experience Architect's View: The Seamless Interface</h2>
+                    <h3>Overall Impact of AI & Modernization</h3>
+                    <p>From an Experience Architect (XA) perspective, AI and modernization are engines for creating intuitive, personalized, and efficient interactions between humans and their environment. Focus is on:</p>
+                    <ul>
+                        <li><strong>Hyper-Personalization:</strong> Services, content, and environments dynamically adapt to individual user needs, preferences, and context in real-time.</li>
+                        <li><strong>Predictive Assistance:</strong> AI anticipates user needs, offering solutions or information proactively, often before the user explicitly asks.</li>
+                        <li><strong>Ambient Computing:</strong> Technology fades into the background, embedded seamlessly into objects and spaces, enabling interaction without dedicated devices.</li>
+                        <li><strong>Natural Interfaces:</strong> Interactions move beyond screens towards voice, gesture, and even BCI (Brain-Computer Interfaces) for more intuitive control.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4.2: Experience Architect - Urban -->
+        <section id="slide-exp-urban" class="slide exp-slide alt-layout">
+             <div class="slide-content">
+                <div data-gsap="stagger-children-left">
+                    <h2>Experience Architect's View: The Seamless Interface</h2>
+                    <h3>Shaping the Urban Landscape</h3>
+                    <p>The XA envisions the future city as a responsive, user-centered ecosystem:</p>
+                    <ul>
+                        <li><strong>Fluid Mobility:</strong> Integrated, on-demand, autonomous transport systems optimized for seamless point-to-point journeys. Real-time route adjustments based on traffic and user preference.</li>
+                        <li><strong>Responsive Environments:</strong> Public spaces adapt lighting, soundscapes, and information displays based on time of day, events, or even aggregated mood data (ethically handled).</li>
+                        <li><strong>Personalized Information Layers:</strong> Augmented Reality (AR) overlays provide contextual information, navigation, and personalized experiences directly onto the physical world.</li>
+                        <li><strong>Frictionless Services:</strong> Accessing city services (payments, permits, reporting issues) becomes effortless through integrated digital platforms and AI assistants.</li>
+                         <li><strong>Accessibility by Design:</strong> Technology inherently designed to cater to diverse needs (e.g., audio descriptions, haptic feedback, adaptive interfaces).</li>
+                    </ul>
+                </div>
+                 <img src="images/ar-city-overlay.jpg" alt="Person looking at a city street through a phone displaying AR information" class="side-image" data-gsap="fade-right">
+            </div>
+        </section>
+
+        <!-- Slide 4.3: Experience Architect - 4th Ind Civ -->
+        <section id="slide-exp-4th" class="slide exp-slide">
+            <div class="slide-content">
+                <img src="images/human-ai-collaboration.jpg" alt="Stylized image of human and AI working together on a complex design" class="side-image" data-gsap="fade-left">
+                <div data-gsap="stagger-children-right">
+                     <h2>Experience Architect's View: The Seamless Interface</h2>
+                    <h3>Defining the 4th Industrial Civilization</h3>
+                    <p>For the XA, the Fourth Industrial Civilization is defined by the *quality* and *nature* of the human-technology experience:</p>
+                    <ul>
+                        <li><strong>Invisible Interfaces:</strong> Technology becomes so integrated that the "interface" disappears, interactions become natural extensions of human intention.</li>
+                        <li><strong>AI as Creative Partner:</strong> AI transitions from tool to collaborator, assisting in design, problem-solving, and creative endeavors in novel ways.</li>
+                        <li><strong>Experience Ecosystems:</strong> Journeys seamlessly cross multiple platforms, devices, and physical spaces, managed by underlying AI orchestrators.</li>
+                        <li><strong>Ethical UX Challenges:</strong> Designing for user agency, preventing manipulative patterns ("dark UX"), ensuring data transparency, and managing cognitive load become paramount.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+         <!-- Slide 4.4: Experience Architect - Pros/Cons -->
+        <section id="slide-exp-proscons" class="slide exp-slide pros-cons-slide">
+            <div class="slide-content">
+                 <h2 data-gsap="fade-down">Experience Architect's View: The Seamless Interface</h2>
+                <h3 data-gsap="fade-up">Pros & Cons</h3>
+                 <div class="pros-cons-container" data-gsap="stagger-children">
+                    <div class="pros">
+                        <h4>Potential Positives (Pros)</h4>
+                        <ul>
+                            <li>Unprecedented convenience and efficiency</li>
+                            <li>Highly personalized and relevant experiences</li>
+                            <li>Increased accessibility for people with disabilities</li>
+                            <li>Enhanced creativity and problem-solving capabilities</li>
+                            <li>Safer environments (e.g., autonomous vehicles, predictive maintenance)</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>Potential Negatives (Cons)</h4>
+                        <ul>
+                            <li>Over-reliance leading to deskilling or helplessness</li>
+                            <li>Potential for manipulation and addictive design</li>
+                            <li>Significant data privacy and security risks</li>
+                            <li>Filter bubbles limiting exposure to diverse perspectives</li>
+                            <li>Complexity leading to frustration if poorly designed</li>
+                            <li>Risk of digital exclusion for those unable/unwilling to adapt</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Slide 5.1: Smart City Synthesis - Principles -->
+        <section id="slide-synthesis-principles" class="slide synthesis-slide">
+            <div class="slide-content">
+                <h2 data-gsap="fade-down">Synthesized Smart City: Anthro-Tech Nexus</h2>
+                <h3 data-gsap="fade-up">Guiding Principles</h3>
+                 <p data-gsap="fade-up">Blending anthropological foresight with experience architecture focus, our ideal future city operates on these principles:</p>
+                 <div class="principles-grid" data-gsap="stagger-children">
+                    <div class="principle"><strong>Human-Centric & Equitable:</strong> Tech serves human needs, prioritizes fairness, actively mitigates bias, and ensures accessibility for all. <em>(Anthro + XA)</em></div>
+                    <div class="principle"><strong>Seamless & Intuitive:</strong> Interactions are efficient, predictable, and low-friction, but user control and opt-out are paramount. <em>(XA guided by Anthro)</em></div>
+                    <div class="principle"><strong>Community & Connection Focused:</strong> Technology fosters genuine social interaction, local participation, and cultural vibrancy, not isolation. <em>(Anthro Priority)</em></div>
+                    <div class="principle"><strong>Transparent & Accountable:</strong> Data usage and algorithmic decision-making are clear, understandable, and subject to oversight. <em>(Anthro Demand)</em></div>
+                    <div class="principle"><strong>Sustainable & Resilient:</strong> AI optimizes resource use (energy, water, waste) and helps the city adapt to environmental changes. <em>(Shared Goal)</em></div>
+                     <div class="principle"><strong>Adaptive & Empowering:</strong> Personalization enhances life without dictating it; technology empowers citizens with information and tools. <em>(XA + Anthro)</em></div>
+                 </div>
+                  <img src="images/city-blueprint-glow.jpg" alt="Glowing futuristic city blueprint integrating human figures" class="bottom-image" data-gsap="fade-scale-up">
+            </div>
+        </section>
+
+        <!-- Slide 5.2: Smart City Synthesis - Features -->
+       <section id="slide-synthesis-features" class="slide synthesis-slide alt-layout">
+            <div class="slide-content">
+                 <div data-gsap="stagger-children-left">
+                     <h2>Synthesized Smart City: Anthro-Tech Nexus</h2>
+                    <h3>Key Features & Examples</h3>
+                    <ul>
+                        <li data-feature="mobility"><strong>Equitable Mobility Cloud:</strong> Integrated public/private/shared autonomous transit, prioritizing access for underserved areas, with transparent pricing & routing algorithms.</li>
+                        <li data-feature="civic"><strong>Civic Engagement Platform:</strong> Secure, accessible digital tools for participatory budgeting, local policy feedback, and community organizing, bridging digital divides.</li>
+                        <li data-feature="resources"><strong>Hyperlocal Resource Network:</strong> AI optimizes sharing economies (tools, skills, spaces), manages community energy grids, and facilitates urban farming networks.</li>
+                        <li data-feature="health"><strong>Privacy-Preserving Public Health AI:</strong> Anonymized data analysis predicts outbreaks and allocates resources efficiently, with strong ethical oversight.</li>
+                        <li data-feature="spaces"><strong>Adaptive Public Spaces:</strong> Parks and plazas use subtle tech (e.g., responsive lighting, air quality sensors, interactive art) enhancing usability without surveillance overload.</li>
+                        <li data-feature="digital-twin"><strong>Living Digital Twin with Citizen Input:</strong> A city model used for planning, dynamically updated with real-world data AND citizen feedback/concerns.</li>
+                         <li data-feature="heritage"><strong>AR Cultural Heritage Trails:</strong> Engaging, accessible ways to explore local history and culture, co-created with community members.</li>
+                    </ul>
+                </div>
+                <img src="images/smart-city-dashboard.jpg" alt="Interface showing diverse smart city data points and citizen interactions" class="side-image" data-gsap="fade-right" id="synthesis-image">
+            </div>
+        </section>
+
+        <!-- Slide 6: Challenges -->
+        <section id="slide-challenges" class="slide challenges-slide">
+            <div class="slide-content">
+                <img src="images/crossroads-sign.jpg" alt="Signpost pointing towards 'Utopia' and 'Dystopia'" class="side-image" data-gsap="fade-left">
+                 <div data-gsap="stagger-children-right">
+                    <h2>Challenges & The Path Forward</h2>
+                    <p>Building this future requires navigating significant hurdles:</p>
+                    <ul>
+                        <li><strong>Governance & Ethics:</strong> Establishing robust frameworks for AI ethics, data privacy, and algorithmic accountability. Who governs the algorithms?</li>
+                        <li><strong>Equity & Access:</strong> Actively combating the digital divide and ensuring benefits are shared, preventing the creation of tech-driven underclasses.</li>
+                        <li><strong>Security & Resilience:</strong> Protecting critical infrastructure from cyber threats and ensuring systems are robust against failure or manipulation.</li>
+                        <li><strong>Human Agency & Well-being:</strong> Designing systems that augment, not diminish, human autonomy, critical thinking, and genuine social connection. Avoiding addictive or manipulative tech.</li>
+                         <li><strong>Adaptability & Skills:</strong> Preparing the workforce and society for continuous technological change and new ways of living and working.</li>
+                    </ul>
+                    <p>The path forward requires conscious design, multi-stakeholder collaboration (citizens, government, industry, academia), and a constant focus on human values.</p>
+                 </div>
+            </div>
+        </section>
+
+         <!-- Slide 7: Conclusion -->
+        <section id="slide-conclusion" class="slide conclusion-slide">
+            <div class="slide-content">
+                <h2 data-gsap="fade-down">An Evolving Symbiosis</h2>
+                 <img src="images/future-horizon.jpg" alt="Sunrise over a futuristic city skyline" class="banner-image" data-gsap="fade-scale-up">
+                <p data-gsap="fade-up">The future city driven by AI and modernization is not predetermined. It's a space of immense potential and significant risk.</p>
+                <p data-gsap="fade-up-delay">By integrating the Anthropologist's critical lens on societal impact with the Experience Architect's focus on human-centered design, we can strive to build urban futures that are not just "smart," but also wise, equitable, and truly livable.</p>
+                <p data-gsap="fade-up-delay-more">The conversation must continue, adapting as technology and society co-evolve.</p>
+                 <div class="contact-info" data-gsap="fade-in-late">
+                    <p>Explore Further | Share Your Perspective</p>
+                    <!-- Add social links or contact info here if desired -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- tsParticles Initialization ---
+            tsParticles.load("tsparticles", {
+                fpsLimit: 60,
+                particles: {
+                    number: { value: 50, density: { enable: true, value_area: 800 } },
+                    color: { value: "#00bcd4" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.3, random: true, anim: { enable: true, speed: 0.5, opacity_min: 0.1, sync: false } },
+                    size: { value: 2, random: true, anim: { enable: false } },
+                    line_linked: { enable: true, distance: 120, color: "#80deea", opacity: 0.2, width: 1 },
+                    move: { enable: true, speed: 0.6, direction: "none", random: true, straight: false, out_mode: "out", bounce: false, attract: { enable: false } }
+                },
+                interactivity: { detect_on: "canvas", events: { onhover: { enable: false }, onclick: { enable: false }, resize: true } },
+                retina_detect: true,
+                background: {} // CSS handles background
+            });
+
+            // --- GSAP Animations ---
+            gsap.registerPlugin(ScrollTrigger);
+
+            const slides = document.querySelectorAll('.slide');
+            const navLinks = document.querySelectorAll('#progress-nav a');
+
+            function updateNav(activeIndex) {
+                navLinks.forEach((link, index) => {
+                    link.classList.toggle('active', index === activeIndex);
+                });
+            }
+
+            slides.forEach((slide, index) => {
+                ScrollTrigger.create({
+                    trigger: slide, start: "top center", end: "bottom center",
+                    onEnter: () => updateNav(index),
+                    onEnterBack: () => updateNav(index)
+                });
+
+                const triggerConfig = { trigger: slide, start: "top 65%" };
+                const fadeUpElements = slide.querySelectorAll('[data-gsap="fade-up"]');
+                const fadeDownElements = slide.querySelectorAll('[data-gsap="fade-down"]');
+                const fadeLeftElements = slide.querySelectorAll('[data-gsap="fade-left"]');
+                const fadeRightElements = slide.querySelectorAll('[data-gsap="fade-right"]');
+                const fadeScaleUpElements = slide.querySelectorAll('[data-gsap="fade-scale-up"]');
+                const fadeScaleDownElements = slide.querySelectorAll('[data-gsap="fade-scale-down"]');
+                const fadeInLateElements = slide.querySelectorAll('[data-gsap="fade-in-late"]');
+                const fadeUpDelayElements = slide.querySelectorAll('[data-gsap="fade-up-delay"]');
+                const fadeUpDelayMoreElements = slide.querySelectorAll('[data-gsap="fade-up-delay-more"]');
+                const staggerContainers = slide.querySelectorAll('[data-gsap="stagger-children"]');
+                const staggerLeftContainers = slide.querySelectorAll('[data-gsap="stagger-children-left"]');
+                const staggerRightContainers = slide.querySelectorAll('[data-gsap="stagger-children-right"]');
+
+                if(fadeUpElements.length) gsap.from(fadeUpElements, { scrollTrigger: triggerConfig, opacity: 0, y: 50, duration: 0.8, ease: 'power2.out', stagger: 0.1 });
+                if(fadeDownElements.length) gsap.from(fadeDownElements, { scrollTrigger: triggerConfig, opacity: 0, y: -50, duration: 0.8, ease: 'power2.out', stagger: 0.1 });
+                if(fadeLeftElements.length) gsap.from(fadeLeftElements, { scrollTrigger: triggerConfig, opacity: 0, x: -60, duration: 1, ease: 'power3.out' });
+                if(fadeRightElements.length) gsap.from(fadeRightElements, { scrollTrigger: triggerConfig, opacity: 0, x: 60, duration: 1, ease: 'power3.out' });
+                if(fadeScaleUpElements.length) gsap.from(fadeScaleUpElements, { scrollTrigger: triggerConfig, opacity: 0, scale: 0.8, duration: 1, ease: 'power3.out' });
+                if(fadeScaleDownElements.length) gsap.from(fadeScaleDownElements, { scrollTrigger: triggerConfig, opacity: 0, scale: 1.1, y:-20, duration: 1, ease: 'power3.out' });
+                if(fadeInLateElements.length) gsap.from(fadeInLateElements, { scrollTrigger: triggerConfig, opacity: 0, duration: 0.8, ease: 'power2.out', delay: 0.8 });
+                if(fadeUpDelayElements.length) gsap.from(fadeUpDelayElements, { scrollTrigger: triggerConfig, opacity: 0, y: 30, duration: 0.8, ease: 'power2.out', delay: 0.3, stagger: 0.1 });
+                if(fadeUpDelayMoreElements.length) gsap.from(fadeUpDelayMoreElements, { scrollTrigger: triggerConfig, opacity: 0, y: 30, duration: 0.8, ease: 'power2.out', delay: 0.5, stagger: 0.1 });
+
+                staggerContainers.forEach(container => gsap.from(container.children, { scrollTrigger: { trigger: container, start: "top 75%" }, opacity: 0, y: 30, duration: 0.6, ease: 'power1.out', stagger: 0.15 }));
+                staggerLeftContainers.forEach(container => gsap.from(container.children, { scrollTrigger: { trigger: container, start: "top 75%" }, opacity: 0, x: 30, duration: 0.6, ease: 'power1.out', stagger: 0.1 }));
+                staggerRightContainers.forEach(container => gsap.from(container.children, { scrollTrigger: { trigger: container, start: "top 75%" }, opacity: 0, x: -30, duration: 0.6, ease: 'power1.out', stagger: 0.1 }));
+            });
+
+            // --- Keyboard Navigation ---
+            const navigateSlides = (direction) => {
+                const currentScroll = window.scrollY;
+                const viewportHeight = window.innerHeight;
+                let targetY = -1;
+                if (direction === 'down') {
+                    for (let i = 0; i < slides.length; i++) { if (slides[i].offsetTop > currentScroll + viewportHeight * 0.5) { targetY = slides[i].offsetTop; break; } }
+                    if (targetY === -1) targetY = document.body.scrollHeight - viewportHeight;
+                } else if (direction === 'up') {
+                    for (let i = slides.length - 1; i >= 0; i--) { if (slides[i].offsetTop < currentScroll - viewportHeight * 0.5) { targetY = slides[i].offsetTop; break; } }
+                    if (currentScroll > 0 && targetY === -1) targetY = 0;
+                }
+                if (targetY !== -1) window.scrollTo({ top: targetY, behavior: 'smooth' });
+             };
+             document.addEventListener('keydown', (event) => {
+                 if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA' || event.target.isContentEditable) return;
+                 switch (event.key) {
+                    case 'ArrowDown': case 'PageDown': case ' ': event.preventDefault(); navigateSlides('down'); break;
+                    case 'ArrowUp': case 'PageUp': event.preventDefault(); navigateSlides('up'); break;
+                 }
+             });
+
+            // --- Progress Nav Click ---
+            navLinks.forEach(link => {
+                 link.addEventListener('click', (e) => {
+                     e.preventDefault();
+                     const targetId = link.getAttribute('href');
+                     const targetElement = document.querySelector(targetId);
+                     if (targetElement) window.scrollTo({ top: targetElement.offsetTop, behavior: 'smooth' });
+                 });
+            });
+
+            // --- Simple Interactive Feature Example ---
+            const featureListItems = document.querySelectorAll('#slide-synthesis-features ul li');
+            const synthesisImage = document.getElementById('synthesis-image');
+            if (featureListItems.length && synthesisImage) {
+                 featureListItems.forEach(item => {
+                     item.addEventListener('mouseenter', () => synthesisImage.classList.add('highlighted'));
+                     item.addEventListener('mouseleave', () => synthesisImage.classList.remove('highlighted'));
+                 });
+            }
+
+        }); // End DOMContentLoaded
+    </script>
+
+</body>
+</html>
